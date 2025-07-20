@@ -5,12 +5,12 @@ const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(express.json());
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+// مسیر فایل‌های داده
 const usersFile = path.resolve("./users.json");
 const messagesFile = path.resolve("./messages.json");
 
+// خواندن JSON با خطاگیری
 async function readJSON(file) {
   try {
     const data = await fs.readFile(file, "utf-8");
@@ -20,11 +20,12 @@ async function readJSON(file) {
   }
 }
 
+// نوشتن JSON
 async function writeJSON(file, data) {
   await fs.writeFile(file, JSON.stringify(data, null, 2), "utf-8");
 }
 
-// ثبت‌نام
+// ثبت‌نام کاربر
 app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
 
@@ -47,7 +48,7 @@ app.post("/api/register", async (req, res) => {
   res.json({ message: "ثبت‌نام با موفقیت انجام شد." });
 });
 
-// ورود
+// ورود کاربر
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -92,14 +93,11 @@ app.post("/api/messages", async (req, res) => {
   res.status(201).json({ message: "پیام با موفقیت ارسال شد." });
 });
 
-// پاسخ ادمین
+// پاسخ ادمین به پیام
 app.post("/api/messages/reply", async (req, res) => {
   const { id, reply } = req.body;
-  if (typeof id !== "number" && typeof id !== "string") {
-    return res.status(400).json({ error: "شناسه پیام نامعتبر است." });
-  }
-  if (typeof reply !== "string" || reply.trim() === "") {
-    return res.status(400).json({ error: "پاسخ نمی‌تواند خالی باشد." });
+  if ((typeof id !== "number" && typeof id !== "string") || !reply || reply.trim() === "") {
+    return res.status(400).json({ error: "شناسه پیام یا پاسخ نامعتبر است." });
   }
   const messages = await readJSON(messagesFile);
   const msg = messages.find(m => m.id == id);
@@ -111,8 +109,8 @@ app.post("/api/messages/reply", async (req, res) => {
   res.json({ message: "پاسخ با موفقیت ثبت شد." });
 });
 
-// سرو فایل‌های ایستا مثل HTML/CSS/JS
-app.use(express.static("public"));
+// سرو کردن فایل‌های استاتیک از فولدر public
+app.use(express.static(path.join(__dirname, "public")));
 
 // اجرای سرور
 const PORT = process.env.PORT || 3000;

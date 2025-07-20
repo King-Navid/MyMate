@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(express.json());
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 const usersFile = path.resolve("./users.json");
 const messagesFile = path.resolve("./messages.json");

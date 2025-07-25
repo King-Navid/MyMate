@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -35,6 +36,7 @@
       align-items: center;
       justify-content: space-between;
       direction: ltr;
+      flex-wrap: wrap;
     }
     h1.site-title {
       font-weight: 900;
@@ -233,26 +235,32 @@
       animation-delay: 1.2s;
     }
 
-    /* Animations */
     @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(10px) scale(0.98);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .fade-in {
-      opacity: 0;
-      animation: fadeIn 1s ease-out forwards;
-    }
+    .fade-in { opacity: 0; animation: fadeIn 1s ease-out forwards; }
     .fade-in:nth-child(1) { animation-delay: 0.1s; }
     .fade-in:nth-child(2) { animation-delay: 0.3s; }
     .fade-in:nth-child(3) { animation-delay: 0.6s; }
     .fade-in:nth-child(4) { animation-delay: 0.9s; }
 
+    /* MOBILE */
+    @media (max-width: 640px) {
+      h1.site-title { font-size: 1.8rem; }
+      .nav-buttons { gap: 0.5rem; }
+      main.container { padding: 1rem; }
+      section.text-center h2 { font-size: 1.9rem; }
+      section.text-center p { font-size: 1.1rem; }
+      section.features { gap: 1rem; }
+      .feature-card { padding: 1rem; }
+      .feature-card h3 { font-size: 1.2rem; }
+      form#commentForm { padding: 1rem; }
+      form#commentForm input,
+      form#commentForm textarea { padding: 0.8rem; }
+      form#commentForm button { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+      footer { font-size: 0.9rem; padding: 0.8rem 0; }
+    }
   </style>
 </head>
 <body>
@@ -260,7 +268,6 @@
 <header>
   <nav>
     <h1 class="site-title fade-in">My Mate</h1>
-
     <div class="nav-buttons fade-in">
       <a href="chat.html" class="btn-auth">پشتیبانی</a>
       <a href="login.html" class="btn-auth">ورود</a>
@@ -301,10 +308,8 @@
     <form id="commentForm">
       <label for="name">نام شما</label>
       <input id="name" name="name" type="text" required />
-
       <label for="comment">نظر شما</label>
       <textarea id="comment" name="comment" rows="5" required></textarea>
-
       <button type="submit">ثبت نظر</button>
     </form>
 
@@ -320,28 +325,22 @@
 </footer>
 
 <script>
-  // فرم ثبت نظر ساده
   const form = document.getElementById('commentForm');
   const commentsList = document.getElementById('commentsList');
-
   form.addEventListener('submit', e => {
     e.preventDefault();
     const name = form.name.value.trim();
     const comment = form.comment.value.trim();
-
-    if(name && comment) {
-      const commentItem = document.createElement('div');
-      commentItem.style.padding = '1rem';
-      commentItem.style.borderBottom = '1px solid #fad761';
-      commentItem.style.color = '#5a4d0e';
-      commentItem.style.fontWeight = '600';
-      commentItem.style.marginBottom = '0.8rem';
-      commentItem.textContent = `${name}: ${comment}`;
-
-      if(commentsList.querySelector('p')) {
-        commentsList.innerHTML = '';
-      }
-      commentsList.appendChild(commentItem);
+    if (name && comment) {
+      const div = document.createElement('div');
+      div.style.padding='1rem';
+      div.style.borderBottom='1px solid #fad761';
+      div.style.color='#5a4d0e';
+      div.style.fontWeight='600';
+      div.style.marginBottom='0.8rem';
+      div.textContent = `${name}: ${comment}`;
+      if (commentsList.querySelector('p')) commentsList.innerHTML = '';
+      commentsList.appendChild(div);
       form.reset();
     }
   });

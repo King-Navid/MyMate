@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ورود - My Mate</title>
+  <title>My Mate - همراه هوشمند لیست خرید</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
@@ -13,17 +13,24 @@
       --brand: #fad761;
       --brand-600: #e0b92a;
       --paper: #fff8dc;
+      --paper-2: #fff3c4;
       --ink: #5a4d0e;
+      --ink-strong: #2f2705;
       --shadow-brand: rgba(250, 215, 97, 0.45);
     }
     body {
       font-family: 'Vazirmatn', sans-serif;
-      background:
+      background: 
         radial-gradient(1200px 600px at 110% -10%, #fff2b8 0%, transparent 60%),
         radial-gradient(1000px 600px at -10% 110%, #fff1a6 0%, transparent 60%),
         linear-gradient(#fffdf5, var(--paper));
+      margin: 0;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       color: var(--ink);
+      position: relative;
     }
     body::before {
       content: '';
@@ -37,148 +44,442 @@
       pointer-events: none;
       z-index: 0;
     }
-    main.auth-card {
-      background: rgba(255, 249, 230, 0.7);
-      border-radius: 20px;
-      box-shadow: 0 14px 30px rgba(250, 215, 97, 0.45);
-      border: 1px solid rgba(250, 215, 97, 0.35);
-      backdrop-filter: blur(8px) saturate(140%);
-      -webkit-backdrop-filter: blur(8px) saturate(140%);
+    header {
+      background: rgba(250,215,97,0.75);
+      backdrop-filter: saturate(160%) blur(8px);
+      -webkit-backdrop-filter: saturate(160%) blur(8px);
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(250,215,97,0.35);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      direction: ltr;
+    }
+    h1.site-title {
+      font-weight: 900;
+      font-size: 2.5rem;
+      user-select: none;
+      color: black;
+      margin: 0;
+      text-align: left;
+      flex-grow: 0;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      direction: rtl;
+    }
+    nav a {
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      white-space: nowrap;
+      color: black;
+    }
+    nav a:focus-visible {
+      outline: 3px solid var(--brand-600);
+      outline-offset: 2px;
+    }
+    .btn-auth {
+      background-color: black;
+      color: var(--brand);
+      font-weight: 700;
+      padding: 0.55rem 1.05rem;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      border: 2px solid transparent;
+      background-image: linear-gradient(black, black), linear-gradient(90deg, var(--brand), #ffe38a);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transform: translateY(0);
+    }
+    .btn-auth:hover {
+      background-image: linear-gradient(var(--brand-600), var(--brand-600)), linear-gradient(90deg, var(--brand), #ffe38a);
+      color: black;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(234, 191, 51, 0.35);
+    }
+
+    main.container {
+      max-width: 900px;
+      width: 100%;
+      padding: 2rem 1rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: relative;
       z-index: 1;
     }
-    main.auth-card h1 {
+
+    section.text-center {
+      text-align: center;
+      max-width: 720px;
+      margin-bottom: 4rem;
+    }
+    section.text-center h2 {
+      font-weight: 900;
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
       background: linear-gradient(180deg, #d97706 0%, #b06e00 100%);
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent !important;
-      text-shadow: none;
+      color: transparent;
     }
-    main.auth-card button[type="submit"] {
+    section.text-center p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      letter-spacing: 0.6px;
+      color: #5a4d0e;
+    }
+    section.text-center button {
+      margin-top: 2rem;
+      background: linear-gradient(180deg, rgba(250,215,97,0.95), rgba(255,230,140,0.9));
+      color: black;
+      padding: 0.9rem 2.6rem;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: not-allowed;
+      opacity: 0.92;
+      user-select: none;
+      box-shadow: 0 8px 24px var(--shadow-brand);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    section.features {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      width: 100%;
+      color: #5a4d0e;
+    }
+    .feature-card {
+      background: rgba(255, 249, 230, 0.75);
+      padding: 1.8rem 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 28px rgba(250, 215, 97, 0.35);
+      font-weight: 700;
+      color: var(--ink);
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+      cursor: default;
+      user-select: none;
+      border: 1px solid rgba(250, 215, 97, 0.35);
+      backdrop-filter: blur(6px) saturate(140%);
+      -webkit-backdrop-filter: blur(6px) saturate(140%);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(300px 80px at 20% 0%, rgba(255,255,255,0.7), transparent 60%);
+      pointer-events: none;
+    }
+    .feature-card:hover {
+      box-shadow: 0 16px 50px rgba(250, 215, 97, 0.5);
+      transform: translateY(-6px) scale(1.03);
+    }
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    section#comments {
+      margin-top: 7rem;
+      max-width: 700px;
+      width: 100%;
+    }
+    section#comments h3 {
+      text-align: center;
+      font-weight: 900;
+      font-size: 2rem;
+      color: #d97706;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 3px #b06e00;
+      user-select: none;
+    }
+    form#commentForm {
+      background: rgba(255, 249, 230, 0.7);
+      padding: 1.8rem;
+      border-radius: 20px;
+      box-shadow: 0 14px 30px rgba(250, 215, 97, 0.45);
+      transition: box-shadow 0.3s ease;
+      user-select: none;
+      border: 1px solid rgba(250, 215, 97, 0.35);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    form#commentForm label {
+      font-weight: 700;
+      color: #5a4d0e;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    form#commentForm input,
+    form#commentForm textarea {
+      width: 100%;
+      margin-bottom: 1.2rem;
+      padding: 1rem 1.2rem;
+      border: 2px solid #fad761;
+      border-radius: 16px;
+      outline-offset: 3px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    form#commentForm input:focus,
+    form#commentForm textarea:focus {
+      border-color: #e0b92a;
+    }
+    form#commentForm button {
       background: linear-gradient(180deg, rgba(250,215,97,1), rgba(234,191,51,1));
       color: black;
       font-weight: 800;
-      padding: 0.9rem 1.2rem;
-      border-radius: 999px;
+      padding: 1rem 2rem;
+      border-radius: 24px;
       cursor: pointer;
       user-select: none;
       transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
       border: 1px solid rgba(0,0,0,0.06);
       box-shadow: 0 10px 22px var(--shadow-brand);
     }
-    main.auth-card button[type="submit"]:hover {
-      background-color: var(--brand-600);
+    form#commentForm button:hover {
+      background-color: #e0b92a;
       box-shadow: 0 12px 26px rgba(224,185,42,0.5);
       transform: translateY(-1px);
     }
-    label { color: var(--ink); font-weight: 700; }
-    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
-      outline: 3px solid var(--brand-600);
-      outline-offset: 2px;
+
+    #commentsList {
+      margin-top: 2.5rem;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 1.1rem;
+      min-height: 60px;
     }
+    #commentsList p {
+      text-align: center;
+      color: #a16207;
+      user-select: none;
+    }
+    .comment-item {
+      padding: 1rem;
+      border-bottom: 1px solid var(--brand);
+      color: var(--ink);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      background: rgba(255,255,255,0.6);
+      border-radius: 12px;
+      animation: pop 320ms ease-out;
+    }
+
+    footer {
+      background: linear-gradient(180deg, rgba(250,215,97,0.95), rgba(250,215,97,1));
+      color: black;
+      font-weight: 700;
+      padding: 1rem 0;
+      width: 100%;
+      text-align: center;
+      user-select: none;
+      box-shadow: 0 -6px 20px rgba(250, 215, 97, 0.4);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    @keyframes pop {
+      0% { opacity: 0; transform: translateY(6px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+    }
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.3s; }
+    .fade-in:nth-child(3) { animation-delay: 0.6s; }
+    .fade-in:nth-child(4) { animation-delay: 0.9s; }
+
     @media (prefers-reduced-motion: reduce) {
-      * { animation: none !important; transition-duration: 0.01ms !important; }
-      html:focus-within { scroll-behavior: auto; }
+      * {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+      }
+      html:focus-within {
+        scroll-behavior: auto;
+      }
     }
+
     @media (max-width: 700px) {
-      main.auth-card {
-        padding: 1.5rem 0.5rem;
+      header nav {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 0.5rem;
+      }
+      .site-title {
+        font-size: 1.3rem;
+      }
+      .nav-buttons {
+        gap: 0.5rem;
+        width: 100%;
+        justify-content: flex-start;
+      }
+      main.container {
+        padding: 1rem 0.2rem;
+        max-width: 100vw;
+      }
+      section.text-center h2 {
+        font-size: 1.2rem;
+      }
+      section.text-center p, .feature-card p {
+        font-size: 1rem;
+      }
+      section.features {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .feature-card {
+        padding: 1rem 0.5rem;
         border-radius: 12px;
-        max-width: 98vw;
-        min-width: 0;
       }
-      .auth-card h1 {
-        font-size: 1.5rem;
+      section#comments {
+        margin-top: 2rem;
+        max-width: 100vw;
+        padding: 0 0.2rem;
       }
-      form.space-y-6 > div, form.space-y-6 > button, form.space-y-6 > p {
-        margin-bottom: 1rem !important;
+      form#commentForm {
+        padding: 1rem 0.2rem;
+        border-radius: 12px;
       }
-      input, button[type="submit"] {
-        font-size: 1rem !important;
-        padding: 0.7rem 0.9rem !important;
+      form#commentForm input, form#commentForm textarea {
+        font-size: 1rem;
+        padding: 0.7rem 0.9rem;
       }
-      .inline-flex.text-lg {
-        font-size: 1rem !important;
+      form#commentForm button {
+        font-size: 1rem;
+        padding: 0.7rem 1.2rem;
+        border-radius: 16px;
       }
     }
+
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center">
+<body>
 
-  <main class="auth-card p-10 rounded-2xl max-w-md w-full">
-    <a href="index.html" aria-label="بازگشت به صفحه اصلی" class="inline-flex items-center mb-4 text-yellow-900 hover:text-yellow-700 font-bold text-lg">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
-      بازگشت
-    </a>
-    <h1 class="text-3xl font-extrabold mb-6 text-center">ورود به My Mate</h1>
+<header>
+  <nav>
+    <h1 class="site-title fade-in">My Mate</h1>
 
-    <form id="loginForm" class="space-y-6">
-      <div>
-        <label for="username" class="block mb-2 font-semibold text-yellow-900">نام کاربری</label>
-        <input type="text" id="username" name="username" required aria-required="true" aria-label="نام کاربری"
-          class="w-full p-3 rounded-md border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
-      </div>
+    <div class="nav-buttons fade-in">
+      <a href="chat.html" class="btn-auth">پشتیبانی</a>
+      <a href="login.html" class="btn-auth">ورود</a>
+      <a href="register.html" class="btn-auth">ثبت نام</a>
+    </div>
+  </nav>
+</header>
 
-      <div>
-        <label for="password" class="block mb-2 font-semibold text-yellow-900">رمز عبور</label>
-        <input type="password" id="password" name="password" required aria-required="true" aria-label="رمز عبور"
-          class="w-full p-3 rounded-md border border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-400" />
-      </div>
+<main class="container">
 
-      <div>
-        <button type="submit" class="w-full">
-          ورود
-        </button>
-      </div>
+  <section class="text-center fade-in">
+    <h2>My Mate، همراه هوشمند و ساده شما برای ساخت و مدیریت لیست خرید روزانه</h2>
+    <p>
+      با My Mate به راحتی لیست خرید خود را بسازید، ویرایش کنید و حتی با دوستانتان به اشتراک بگذارید.  
+      این اپلیکیشن کاربرپسند، ساده و سریع طراحی شده تا مدیریت خریدهای روزانه‌ات رو راحت‌تر کنه.
+    </p>
+    <button disabled>به‌زودی منتشر می‌شود</button>
+  </section>
 
-      <p id="errorMsg" class="text-red-600 mt-2 text-center"></p>
-      <p id="successMsg" class="text-green-600 mt-2 text-center"></p>
+  <section id="features" class="features fade-in">
+    <div class="feature-card">
+      <h3>ایجاد و ویرایش سریع لیست</h3>
+      <p>با چند کلیک ساده، لیست خرید خود را بسازید و در هر زمان تغییر دهید.</p>
+    </div>
+    <div class="feature-card">
+      <h3>اشتراک‌گذاری آسان</h3>
+      <p>لیست خرید خود را با دوستان و خانواده به اشتراک بگذارید و خرید گروهی را ساده کنید.</p>
+    </div>
+    <div class="feature-card">
+      <h3>کاهش بار ذهنی</h3>
+      <p>نیازی نیست همه‌چی یادت بمونه — My Mate برای همین ساخته شده!</p>
+    </div>
+  </section>
+
+  <section id="comments" class="fade-in">
+    <h3>نظرات کاربران</h3>
+
+    <form id="commentForm">
+      <label for="name">نام شما</label>
+      <input id="name" name="name" type="text" required aria-required="true" aria-label="نام" />
+
+      <label for="comment">نظر شما</label>
+      <textarea id="comment" name="comment" rows="5" required aria-required="true" aria-label="نظر"></textarea>
+
+      <button type="submit">ثبت نظر</button>
     </form>
 
-    <p class="mt-6 text-center text-yellow-900">
-      ثبت‌نام نکرده‌اید؟
-      <a href="register.html" class="text-yellow-700 font-semibold hover:underline">ثبت نام کنید</a>
-    </p>
-  </main>
+    <div id="commentsList">
+      <p>نظری ثبت نشده است.</p>
+    </div>
+  </section>
 
-  <script>
-    const form = document.getElementById("loginForm");
-    const errorMsg = document.getElementById("errorMsg");
-    const successMsg = document.getElementById("successMsg");
+</main>
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      errorMsg.textContent = "";
-      successMsg.textContent = "";
+<footer>
+  © 2025 My Mate - همه حقوق محفوظ است.
+</footer>
 
-      const username = form.username.value.trim();
-      const password = form.password.value;
+<script>
+  // فرم ثبت نظر ساده
+  const form = document.getElementById('commentForm');
+  const commentsList = document.getElementById('commentsList');
 
-      if (!username || !password) {
-        errorMsg.textContent = "لطفاً نام کاربری و رمز عبور را وارد کنید.";
-        return;
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const comment = form.comment.value.trim();
+
+    if(name && comment) {
+      const commentItem = document.createElement('div');
+      commentItem.className = 'comment-item';
+      commentItem.textContent = `${name}: ${comment}`;
+
+      if(commentsList.querySelector('p')) {
+        commentsList.innerHTML = '';
       }
+      commentsList.appendChild(commentItem);
+      form.reset();
+    }
+  });
+</script>
 
-      try {
-        const res = await fetch("/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password }),
-        });
-        const data = await res.json();
-
-        if (!res.ok) {
-          errorMsg.textContent = data.error || "نام کاربری یا رمز عبور اشتباه است.";
-        } else {
-          successMsg.textContent = data.message || "ورود با موفقیت انجام شد.";
-          form.reset();
-          // Optional: redirect after successful login
-          // window.location.href = "/dashboard";
-        }
-      } catch (err) {
-        errorMsg.textContent = "ارتباط با سرور برقرار نشد.";
-      }
-    });
-  </script>
 </body>
 </html>

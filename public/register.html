@@ -27,7 +27,7 @@
     }
     body::before {
       content: '';
-      position: fixed;,
+      position: fixed;
       inset: -20% -20% auto -20%;
       height: 60vh;
       background:
@@ -80,11 +80,36 @@
       * { animation: none !important; transition-duration: 0.01ms !important; }
       html:focus-within { scroll-behavior: auto; }
     }
+    @media (max-width: 700px) {
+      main.auth-card {
+        padding: 1.5rem 0.5rem;
+        border-radius: 12px;
+        max-width: 98vw;
+        min-width: 0;
+      }
+      .auth-card h1 {
+        font-size: 1.5rem;
+      }
+      form.space-y-6 > div, form.space-y-6 > button, form.space-y-6 > p {
+        margin-bottom: 1rem !important;
+      }
+      input, button[type="submit"] {
+        font-size: 1rem !important;
+        padding: 0.7rem 0.9rem !important;
+      }
+      .inline-flex.text-lg {
+        font-size: 1rem !important;
+      }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center">
 
   <main class="auth-card p-10 rounded-2xl max-w-md w-full">
+    <a href="index.html" aria-label="بازگشت به صفحه اصلی" class="inline-flex items-center mb-4 text-yellow-900 hover:text-yellow-700 font-bold text-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+      بازگشت
+    </a>
     <h1 class="text-3xl font-extrabold mb-6 text-center">ثبت نام در My Mate</h1>
 
     <form id="registerForm" class="space-y-6">
